@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kigali Foot Tour - Experience the Heart of Rwanda</title>
+    
+    <!-- Chosen Palette: Rwandan Earth & Sky -->
+    <!-- Application Structure Plan: A single-page narrative flow designed to guide the user from discovery to conversion. The structure is: 1. Hero (Hook): Immersive intro with immediate CTA. 2. USPs (Inform/Convince): Icon-driven section on why our tour is unique. 3. The Experience (Immerse): Curated media (YouTube, simulated Instagram/TikTok gallery) to showcase the tour. 4. Gallery (Visualize): High-quality images of tour highlights. 5. AI Tour Itinerary Generator (Engage/Personalize): Allows users to input interests and get a personalized tour description from an LLM. 6. Testimonials (Trust): Social proof to build credibility. 7. Booking Form (Convert): A new section with a form to collect name, date, optional places, and email for tour inquiries. 8. WhatsApp Booking (Convert): A clear, final CTA to book via WhatsApp. This structure creates a logical and persuasive user journey, prioritizing engagement and clarity over mirroring the report's analytical format. -->
+    <!-- Visualization & Content Choices: Hero: Full-bleed image with text overlay (Goal: Inform/Hook). USPs: HTML Unicode icons + text in a grid (Goal: Organize/Compare). Experience: Optimized YouTube iframe and a simulated HTML/Tailwind grid for social media visuals to ensure performance (Goal: Change/Immerse), with updated compact, scrollable layouts for Instagram/TikTok including simulated videos. Gallery: Responsive image grid (Goal: Organize). AI Tour Itinerary Generator: Text input, button, and dynamic text output powered by Gemini API (Goal: Engage/Personalize). Testimonials: Styled blockquotes (Goal: Inform). Booking Form: Form with input fields and a submit button, handled by simple JS for submission confirmation (Goal: Convert). WhatsApp Booking: Large, high-contrast button (Goal: Convert). All interactive elements are powered by AOS.js for subtle, performant animations, and vanilla JS for navigation and form handling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDF8F2; /* Warm Neutral Background */
+            color: #333333;
+        }
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1579309421334-4a88f7808b7a?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .btn-primary {
+            @apply bg-[#D9534F] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#C9302C] transition-transform transform hover:scale-105 duration-300;
+        }
+        .btn-secondary {
+             @apply bg-white text-[#333333] font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-transform transform hover:scale-105 duration-300;
+        }
+        .whatsapp-btn {
+            @apply bg-[#25D366] text-white font-bold py-4 px-8 rounded-full shadow-xl hover:bg-[#1DA851] transition-transform transform hover:scale-105 duration-300 flex items-center justify-center space-x-3;
+        }
+        .section-title {
+            @apply text-4xl font-extrabold text-[#2C3E50] mb-4 text-center;
+        }
+        .section-subtitle {
+            @apply text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .video-placeholder {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-placeholder::before {
+            content: '▶'; /* Unicode play icon */
+            font-size: 3rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(0,0,0,0.6);
+            position: absolute;
+            z-index: 10;
+        }
+        .social-media-scroll {
+            -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+            scrollbar-width: none; /* For Firefox */
+        }
+        .social-media-scroll::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Opera */
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white text-shadow">Kigali Walks</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#experience" class="text-white hover:text-gray-200 transition text-shadow">The Experience</a>
+                <a href="#gallery" class="text-white hover:text-gray-200 transition text-shadow">Gallery</a>
+                <a href="#ai-itinerary" class="text-white hover:text-gray-200 transition text-shadow">AI Itinerary</a>
+                <a href="#booking-form" class="text-white hover:text-gray-200 transition text-shadow">Book Now</a>
+                <a href="#booking" class="btn-secondary !py-2 !px-6">WhatsApp Book</a>
+            </div>
+             <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <span class="text-3xl">☰</span>
+            </button>
+        </nav>
+    </header>
+
+     <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-black bg-opacity-90 z-40 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="#experience" class="nav-link text-white text-2xl">The Experience</a>
+            <a href="#gallery" class="nav-link text-white text-2xl">Gallery</a>
+            <a href="#ai-itinerary" class="nav-link text-white text-2xl">AI Itinerary</a>
+            <a href="#booking-form" class="nav-link text-white text-2xl">Book Now</a>
+            <a href="#booking" class="nav-link btn-primary mt-4">WhatsApp Book</a>
+        </div>
+    </div>
+
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Hero Section -->
+        <section id="hero" class="h-screen flex items-center justify-center text-white hero-bg">
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="relative text-center px-4" data-aos="fade-up">
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-shadow">Discover the Heartbeat of Kigali.</h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-shadow">Walk with us to uncover the vibrant streets, hidden gems, and authentic stories of Rwanda's capital.</p>
+                <div class="space-x-4 flex justify-center flex-wrap gap-4">
+                     <a href="#experience" class="btn-secondary">Explore the Tour</a>
+                     <a href="#booking-form" class="btn-primary">Book a Tour</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Walk With Us Section -->
+        <section id="why-us" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title" data-aos="fade-up">Why Walk With Us?</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">We offer more than just a tour; we offer an authentic connection to Kigali. Our experiences are curated to be engaging, insightful, and unforgettable.</p>
+                <div class="grid md:grid-cols-3 gap-10">
+                    <div class="text-center p-8" data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-5xl text-[#D9534F] mb-4">★</div>
+                        <h3 class="text-2xl font-bold mb-2">Authentic Local Insights</h3>
+                        <p class="text-gray-600">Our guides are passionate Kigali locals, ready to share personal stories and uncover the city's best-kept secrets that you won't find in guidebooks.</p>
+                    </div>
+                    <div class="text-center p-8" data-aos="fade-up" data-aos-delay="300">
+                         <div class="text-5xl text-[#D9534F] mb-4">👟</div>
+                        <h3 class="text-2xl font-bold mb-2">Small, Intimate Groups</h3>
+                        <p class="text-gray-600">We keep our tour groups small to ensure a personal and interactive experience, allowing for real conversations and spontaneous discoveries.</p>
+                    </div>
+                    <div class="text-center p-8" data-aos="fade-up" data-aos-delay="400">
+                         <div class="text-5xl text-[#D9534F] mb-4">♥</div>
+                        <h3 class="text-2xl font-bold mb-2">Support Local Communities</h3>
+                        <p class="text-gray-600">By walking with us, you're directly supporting local artisans, coffee shops, and community projects we visit along the way.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Experience Section -->
+        <section id="experience" class="py-20">
+            <div class="container mx-auto px-6">
+                 <h2 class="section-title" data-aos="fade-up">Feel the Vibe of Kigali</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">See and feel the energy of our streets before you even arrive. Our tours are a vibrant mix of culture, history, and modern life. This is a glimpse of what awaits you.</p>
+
+                <!-- YouTube Video -->
+                <div class="mb-16" data-aos="zoom-in">
+                    <div class="aspect-w-16 aspect-h-9 rounded-lg shadow-2xl overflow-hidden mx-auto max-w-4xl">
+                        <iframe 
+                            src="https://www.youtube-nocookie.com/embed/grGqS6S3g5g?rel=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            loading="lazy"
+                            title="Kigali City Tour Preview">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Social Media Feeds -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+                    <div data-aos="fade-right">
+                        <h3 class="text-3xl font-bold text-[#2C3E50] mb-4">From Our Instagram</h3>
+                        <p class="text-gray-600 mb-6">Follow our daily adventures and see the beautiful moments we capture on our tours. A feast for your eyes and inspiration for your journey.</p>
+                         <div class="flex overflow-x-auto gap-4 py-2 social-media-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:flex-wrap">
+                            <img src="https://images.unsplash.com/photo-1601620222214-a9335cf52504?q=80&w=1974&auto=format&fit=crop" alt="Kigali Market" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
+                            <div class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1599834562135-b6fc90e642ca?q=80&w=1935&auto=format&fit=crop');"></div>
+                            <img src="https://images.unsplash.com/photo-1541891244978-888a75e4e3a4?q=80&w=1974&auto=format&fit=crop" alt="Rwandan coffee" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
+                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop" alt="Community gathering" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
+                            <div class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1551632811-552948679d2b?q=80&w=2070&auto=format&fit=crop');"></div>
+                        </div>
+                    </div>
+                     <div data-aos="fade-left" data-aos-delay="200">
+                        <h3 class="text-3xl font-bold text-[#2C3E50] mb-4">Trending on TikTok</h3>
+                        <p class="text-gray-600 mb-6">Catch the dynamic, fun, and fast-paced moments from our tours. Quick clips that show the real energy and joy of exploring Kigali with us.</p>
+                        <div class="flex overflow-x-auto gap-4 py-2 social-media-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:flex-wrap">
+                           <div class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1593455848148-7a5697c11f7a?q=80&w=1964&auto=format&fit=crop');"></div>
+                           <img src="https://images.unsplash.com/photo-1533555776034-0d738f328328?q=80&w=1964&auto=format&fit=crop" alt="Dancing in Kigali" class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover">
+                           <div class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1588665792276-f331904e578c?q=80&w=1974&auto=format&fit=crop');"></div>
+                           <img src="https://images.unsplash.com/photo-1559816001-c8529124430e?q=80&w=1974&auto=format&fit=crop" alt="Kigali Street View" class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title" data-aos="fade-up">Moments from Our Walk</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Every corner holds a new sight, every street a different story. Here are just a few of the memories we've made with our guests.</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid gap-4" data-aos="fade-up">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1579309421334-4a88f7808b7a?q=80&w=1287&auto=format&fit=crop" alt="Kigali cityscape">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1627806531980-60afe5d84caf?q=80&w=1287&auto=format&fit=crop" alt="Kigali Convention Centre">
+                    </div>
+                    <div class="grid gap-4" data-aos="fade-up" data-aos-delay="100">
+                         <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1579297334494-de4c16828574?q=80&w=1470&auto=format&fit=crop" alt="Local market produce">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1596205268042-1763ab3b6BF3?q=80&w=1287&auto=format&fit=crop" alt="Rwandan woman smiling">
+                    </div>
+                    <div class="grid gap-4" data-aos="fade-up" data-aos-delay="200">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1582967753755-cde08f395b05?q=80&w=1287&auto=format&fit=crop" alt="Moto taxis in Kigali">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1547471080-7cc2d5d88e98?q=80&w=1470&auto=format&fit=crop" alt="Portrait of a man from Rwanda">
+                    </div>
+                     <div class="grid gap-4" data-aos="fade-up" data-aos-delay="300">
+                         <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://plus.unsplash.com/premium_photo-1661963228303-b097e3a20f18?q=80&w=1470&auto=format&fit=crop" alt="Kigali neighborhood">
+                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1605711217046-d3885ce3c25b?q=80&w=1335&auto=format&fit=crop" alt="Colorful textiles">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI-Powered Tour Itinerary Generator Section -->
+        <section id="ai-itinerary" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <h2 class="section-title" data-aos="fade-up">✨ Tailor Your Kigali Experience</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Tell us what you love – history, food, art, markets, or something else! Our AI will highlight how your interests connect with the vibrant spirit of our foot tour.</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-6">
+                        <label for="user-interests" class="block text-gray-700 text-lg font-bold mb-2">I'm interested in:</label>
+                        <input type="text" id="user-interests" placeholder="e.g., local food, art, history, vibrant markets"
+                               class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                    </div>
+                    <button id="generate-itinerary-btn" class="btn-primary w-full flex items-center justify-center space-x-2">
+                        <span>Generate My Personalized Tour Snippet</span>
+                        <span class="text-xl">✨</span>
+                    </button>
+
+                    <div id="itinerary-output" class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                        <p id="itinerary-text" class="text-gray-800 italic leading-relaxed"></p>
+                    </div>
+
+                    <div id="loading-indicator" class="hidden mt-8 text-center text-gray-600">
+                        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 mx-auto"></div>
+                        Generating your personalized snippet...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20">
+            <div class="container mx-auto px-6">
+                 <h2 class="section-title" data-aos="fade-up">What Our Walkers Say</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Don't just take our word for it. Here's what fellow travelers have shared about their experience with Kigali Walks.</p>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="p-8 rounded-lg glassmorphism border-0" data-aos="fade-right">
+                        <p class="text-gray-700 italic mb-4">"The best way to see Kigali! Our guide was incredible, full of knowledge and passion. I saw parts of the city I never would have found on my own. Highly recommended!"</p>
+                        <p class="font-bold text-[#2C3E50]">- Alex Johnson, USA</p>
+                    </div>
+                     <div class="p-8 rounded-lg glassmorphism border-0" data-aos="fade-left" data-aos-delay="100">
+                        <p class="text-gray-700 italic mb-4">"An absolutely fantastic tour. It felt like walking with a friend. We tasted amazing local coffee, met friendly artisans, and truly felt the pulse of the city. A must-do in Kigali."</p>
+                        <p class="font-bold text-[#2C3E50]">- Chloe Dubois, France</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Book Your Foot Tour Form Section -->
+        <section id="booking-form" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <h2 class="section-title" data-aos="fade-up">Book Your Kigali Foot Tour</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Fill out the form below and we'll get in touch to confirm your personalized walking experience in Kigali!</p>
+                
+                <div class="bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <form id="tour-booking-form" class="space-y-6">
+                        <div>
+                            <label for="full-name" class="block text-gray-700 text-lg font-bold mb-2">Your Full Name:</label>
+                            <input type="text" id="full-name" name="fullName" placeholder="John Doe" required
+                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                        </div>
+                        <div>
+                            <label for="visit-date" class="block text-gray-700 text-lg font-bold mb-2">Preferred Visit Date:</label>
+                            <input type="date" id="visit-date" name="visitDate" required
+                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                        </div>
+                        <div>
+                            <label for="places-to-visit" class="block text-gray-700 text-lg font-bold mb-2">Places you wish to visit in Kigali (Optional):</label>
+                            <textarea id="places-to-visit" name="placesToVisit" rows="4" placeholder="e.g., Kimironko Market, Nyamirambo Women's Center, local art galleries"
+                                      class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300"></textarea>
+                        </div>
+                        <div>
+                            <label for="email-address" class="block text-gray-700 text-lg font-bold mb-2">Your Email:</label>
+                            <input type="email" id="email-address" name="emailAddress" placeholder="you@example.com" required
+                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                        </div>
+                        <button type="submit" class="btn-primary w-full">Submit Booking Inquiry</button>
+                    </form>
+                    <div id="form-submission-message" class="mt-6 p-4 bg-green-100 text-green-800 rounded-lg hidden">
+                        Thank you for your inquiry! We've received your booking request and will get in touch shortly to finalize your tour.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Booking Section (WhatsApp) -->
+        <section id="booking" class="py-24 bg-gray-800 text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-extrabold mb-4" data-aos="fade-up">Prefer to Book via WhatsApp?</h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">For immediate inquiries or quick questions, chat with us directly on WhatsApp!</p>
+                <div data-aos="zoom-in" data-aos-delay="200">
+                    <a href="https://wa.me/250788123456?text=Hello%20Kigali%20Walks!%20I'm%20interested%20in%20booking%20a%20foot%20tour.%20Can%20you%20please%20provide%20more%20details%20on%20availability%3F"
+                       target="_blank"
+                       class="whatsapp-btn inline-block">
+                        <!-- Unicode character for WhatsApp icon -->
+                        <span class="text-3xl">✆</span>
+                        <span>Chat with us on WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Kigali Foot Tour. All Rights Reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">Experience the real Kigali, one step at a time.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 50,
+        });
+
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-black', 'bg-opacity-50', 'shadow-lg');
+            } else {
+                header.classList.remove('bg-black', 'bg-opacity-50', 'shadow-lg');
+            }
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = mobileMenu.querySelectorAll('.nav-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        navLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // AI Itinerary Generator Logic
+        const generateItineraryBtn = document.getElementById('generate-itinerary-btn');
+        const userInterestsInput = document.getElementById('user-interests');
+        const itineraryOutput = document.getElementById('itinerary-output');
+        const itineraryText = document.getElementById('itinerary-text');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        generateItineraryBtn.addEventListener('click', async () => {
+            const interests = userInterestsInput.value.trim();
+            if (!interests) {
+                itineraryText.textContent = "Please enter your interests to get a personalized tour snippet.";
+                itineraryOutput.classList.remove('hidden');
+                return;
+            }
+
+            itineraryOutput.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+            itineraryText.textContent = "";
+
+            try {
+                const prompt = `Based on the Kigali Foot Tour, generate a short, personalized paragraph highlighting how someone interested in "${interests}" would enjoy our tour. Focus on specific aspects of the tour that cater to these interests. Keep it concise, engaging, and enthusiastic. Here's a brief overview of the Kigali Foot Tour: It explores vibrant local markets, historical sites like the Genocide Memorial, street art, coffee shops, and local artisan workshops, offering insights into Rwandan culture and daily life.`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will provide this automatically
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    itineraryText.textContent = text;
+                    itineraryOutput.classList.remove('hidden');
+                } else {
+                    itineraryText.textContent = "Sorry, I couldn't generate a personalized snippet right now. Please try again or refine your interests.";
+                    itineraryOutput.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error("Error generating itinerary:", error);
+                itineraryText.textContent = "An error occurred while generating the snippet. Please check your internet connection and try again.";
+                itineraryOutput.classList.remove('hidden');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        });
+
+        // Tour Booking Form Logic
+        const tourBookingForm = document.getElementById('tour-booking-form');
+        const formSubmissionMessage = document.getElementById('form-submission-message');
+
+        tourBookingForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // In a real application, you would send this data to a server.
+            // For now, we'll just display a success message.
+            const formData = new FormData(tourBookingForm);
+            const bookingDetails = {};
+            for (let [key, value] of formData.entries()) {
+                bookingDetails[key] = value;
+            }
+            console.log("Booking Details Submitted:", bookingDetails);
+
+            formSubmissionMessage.classList.remove('hidden'); // Show confirmation message
+            tourBookingForm.reset(); // Clear the form
+            
+            // Optionally hide the message after a few seconds
+            setTimeout(() => {
+                formSubmissionMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+    </script>
+    <!-- Spinner CSS for loading indicator -->
+    <style>
+        .loader {
+            border-top-color: #D9534F;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        @-webkit-keyframes spinner {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</body>
+</html>
