@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kigali Foot Tour - Experience the Heart of Rwanda</title>
     
-    <!-- Chosen Palette: Rwandan Earth & Sky -->
-    <!-- Application Structure Plan: A single-page narrative flow designed to guide the user from discovery to conversion. The structure is: 1. Hero (Hook): Immersive intro with immediate CTA. 2. USPs (Inform/Convince): Icon-driven section on why our tour is unique. 3. The Experience (Immerse): Curated media (YouTube, simulated Instagram/TikTok gallery) to showcase the tour. 4. Gallery (Visualize): High-quality images of tour highlights. 5. AI Tour Itinerary Generator (Engage/Personalize): Allows users to input interests and get a personalized tour description from an LLM. 6. Testimonials (Trust): Social proof to build credibility. 7. Booking Form (Convert): A new section with a form to collect name, date, optional places, and email for tour inquiries. 8. WhatsApp Booking (Convert): A clear, final CTA to book via WhatsApp. This structure creates a logical and persuasive user journey, prioritizing engagement and clarity over mirroring the report's analytical format. -->
-    <!-- Visualization & Content Choices: Hero: Full-bleed image with text overlay (Goal: Inform/Hook). USPs: HTML Unicode icons + text in a grid (Goal: Organize/Compare). Experience: Optimized YouTube iframe and a simulated HTML/Tailwind grid for social media visuals to ensure performance (Goal: Change/Immerse), with updated compact, scrollable layouts for Instagram/TikTok including simulated videos. Gallery: Responsive image grid (Goal: Organize). AI Tour Itinerary Generator: Text input, button, and dynamic text output powered by Gemini API (Goal: Engage/Personalize). Testimonials: Styled blockquotes (Goal: Inform). Booking Form: Form with input fields and a submit button, handled by simple JS for submission confirmation (Goal: Convert). WhatsApp Booking: Large, high-contrast button (Goal: Convert). All interactive elements are powered by AOS.js for subtle, performant animations, and vanilla JS for navigation and form handling. -->
+    <!-- Chosen Palette: Rwandan Earth & Sky (updated with Dark Blue accents) -->
+    <!-- Application Structure Plan: A single-page narrative flow designed to guide the user from discovery to conversion. The structure is: 1. Hero (Hook): Immersive intro with immediate CTA. 2. USPs (Inform/Convince): Icon-driven section on why our tour is unique. 3. The Experience (Immerse): Curated media (YouTube, simulated Instagram/TikTok gallery) to showcase the tour. 4. Gallery (Visualize): High-quality images of tour highlights. 5. AI Tour Itinerary Generator (Engage/Personalize): Allows users to input interests and get a personalized tour description from an LLM. 6. Social Media (Connect): New section with prominent links and text-based calls to action for Instagram and TikTok, with a chat icon. 7. Testimonials (Trust): Social proof to build credibility. 8. Booking Form (Convert): A new section with a form to collect name, date, optional places, and email for tour inquiries. 9. WhatsApp Booking (Convert): A clear, final CTA to book via WhatsApp. This structure creates a logical and persuasive user journey, prioritizing engagement and clarity over mirroring the report's analytical format. -->
+    <!-- Visualization & Content Choices: Hero: Full-bleed image with text overlay (Goal: Inform/Hook), with enhanced dark blue button styling. USPs: HTML Unicode icons + text in a grid (Goal: Organize/Compare). Experience: Optimized YouTube iframe and a simulated HTML/Tailwind grid for social media visuals to ensure performance (Goal: Change/Immerse), with updated compact, scrollable layouts for Instagram/TikTok including simulated videos and improved responsiveness for desktop. Gallery: Now features 8 items (4 images, 4 video placeholders) in a horizontal, scrollable row with navigation arrows, each with a descriptive caption. AI Tour Itinerary Generator: Text input, button, and dynamic text output powered by Gemini API (Goal: Engage/Personalize), with updated title. Social Media: Instagram icon now has no background color and no border, maintaining its brand color, while TikTok retains its styling. Individual image/video sizes are reduced, but more items are added to emphasize horizontal scrolling. Testimonials: Styled blockquotes (Goal: Inform). Booking Form: Form with input fields and a prominent dark blue submit button, handled by simple JS for submission confirmation (Goal: Convert). WhatsApp Booking: Large, high-contrast button (Goal: Convert). All interactive elements are powered by AOS.js for subtle, performant animations, and vanilla JS for navigation and form handling. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome is needed for brand icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
     <style>
         body {
@@ -29,19 +32,23 @@
             background-position: center;
         }
         .btn-primary {
-            @apply bg-[#D9534F] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#C9302C] transition-transform transform hover:scale-105 duration-300;
+            /* Applied to primary buttons and main WhatsApp button */
+            @apply bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105 duration-300 cursor-pointer border-8 border-lime-400 hover:border-white hover:bg-opacity-80 hover:text-lime-200 transition-colors;
         }
         .btn-secondary {
-             @apply bg-white text-[#333333] font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition-transform transform hover:scale-105 duration-300;
+            /* Applied to secondary buttons and header WhatsApp button */
+             @apply bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105 duration-300 cursor-pointer border-8 border-lime-400 hover:border-white hover:bg-opacity-80 hover:text-lime-200 transition-colors;
         }
-        .whatsapp-btn {
+        .whatsapp-btn { /* This class is no longer used for the main WhatsApp button */
             @apply bg-[#25D366] text-white font-bold py-4 px-8 rounded-full shadow-xl hover:bg-[#1DA851] transition-transform transform hover:scale-105 duration-300 flex items-center justify-center space-x-3;
         }
         .section-title {
-            @apply text-4xl font-extrabold text-[#2C3E50] mb-4 text-center;
+            font-family: 'Montserrat', sans-serif; /* Apply Montserrat */
+            /* Adjusted text size for responsiveness */
+            @apply text-4xl md:text-5xl font-black text-[#2C3E50] mb-10 text-center tracking-tight; /* Increased size, weight, and tracking */
         }
         .section-subtitle {
-            @apply text-lg text-gray-600 mb-12 text-center max-w-3xl mx-auto;
+            @apply text-xl text-gray-600 mb-20 text-center max-w-3xl mx-auto leading-relaxed; /* Increased size and spacing */
         }
         .glassmorphism {
             background: rgba(255, 255, 255, 0.1);
@@ -57,6 +64,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden; /* Ensure play icon is within bounds */
         }
         .video-placeholder::before {
             content: '▶'; /* Unicode play icon */
@@ -73,6 +81,46 @@
         .social-media-scroll::-webkit-scrollbar {
             display: none; /* For Chrome, Safari, and Opera */
         }
+
+        /* Base style for social media buttons - common properties */
+        .social-media-button {
+            @apply font-bold py-3 px-6 rounded-full shadow-lg transition-transform transform hover:scale-110 duration-300 flex items-center justify-center space-x-2;
+        }
+
+        /* Instagram button style - no background color and no border */
+        .instagram-button-style {
+            background: none; /* Removed background */
+            color: #E1306C; /* Instagram brand color for text and icon */
+            border: none; /* Removed border */
+        }
+
+        /* TikTok button style - retains black background */
+        .tiktok-button-color {
+            @apply bg-black text-white;
+        }
+
+        .stylish-video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-2xl */
+            border: 2px solid #D9534F; /* Red border */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .stylish-video-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .stylish-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -80,13 +128,17 @@
     <!-- Header -->
     <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white text-shadow">Kigali Walks</a>
+            <!-- Changed header title to KIGALI FOOT TOUR and made it bolder and larger -->
+            <a href="#" class="text-2xl md:text-3xl font-extrabold tracking-widest text-white text-shadow">KIGALI FOOT TOUR</a>
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#experience" class="text-white hover:text-gray-200 transition text-shadow">The Experience</a>
-                <a href="#gallery" class="text-white hover:text-gray-200 transition text-shadow">Gallery</a>
-                <a href="#ai-itinerary" class="text-white hover:text-gray-200 transition text-shadow">AI Itinerary</a>
-                <a href="#booking-form" class="text-white hover:text-gray-200 transition text-shadow">Book Now</a>
-                <a href="#booking" class="btn-secondary !py-2 !px-6">WhatsApp Book</a>
+                <!-- Applied stronger styling and hover effect to navigation links -->
+                <a href="#experience" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">The Experience</a>
+                <a href="#gallery" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">Gallery</a>
+                <a href="#ai-itinerary" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">Ask Our AI</a>
+                <a href="#social-media" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">Socials</a>
+                <a href="#booking-form" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">Book Now</a>
+                <!-- Header WhatsApp button: Changed to text-based link to match other nav items -->
+                <a href="#booking" class="text-xl font-bold text-white hover:text-lime-300 transition text-shadow">WhatsApp Book</a>
             </div>
              <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
                 <span class="text-3xl">☰</span>
@@ -97,11 +149,14 @@
      <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden fixed inset-0 bg-black bg-opacity-90 z-40 md:hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="#experience" class="nav-link text-white text-2xl">The Experience</a>
-            <a href="#gallery" class="nav-link text-white text-2xl">Gallery</a>
-            <a href="#ai-itinerary" class="nav-link text-white text-2xl">AI Itinerary</a>
-            <a href="#booking-form" class="nav-link text-white text-2xl">Book Now</a>
-            <a href="#booking" class="nav-link btn-primary mt-4">WhatsApp Book</a>
+            <!-- Applied stronger styling to mobile navigation links for consistency -->
+            <a href="#experience" class="nav-link text-white text-2xl font-bold hover:text-lime-300">The Experience</a>
+            <a href="#gallery" class="nav-link text-white text-2xl font-bold hover:text-lime-300">Gallery</a>
+            <a href="#ai-itinerary" class="nav-link text-white text-2xl font-bold hover:text-lime-300">Ask Our AI</a>
+            <a href="#social-media" class="nav-link text-white text-2xl font-bold hover:text-lime-300">Socials</a>
+            <a href="#booking-form" class="nav-link text-white text-2xl font-bold hover:text-lime-300">Book Now</a>
+            <!-- Mobile WhatsApp button: Changed to text-based link to match other nav items -->
+            <a href="#booking" class="nav-link text-white text-2xl font-bold hover:text-lime-300">WhatsApp Book</a>
         </div>
     </div>
 
@@ -116,6 +171,7 @@
                 <h1 class="text-5xl md:text-7xl font-extrabold mb-4 text-shadow">Discover the Heartbeat of Kigali.</h1>
                 <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-shadow">Walk with us to uncover the vibrant streets, hidden gems, and authentic stories of Rwanda's capital.</p>
                 <div class="space-x-4 flex justify-center flex-wrap gap-4">
+                     <!-- Buttons with updated border and hover effects for extreme visibility -->
                      <a href="#experience" class="btn-secondary">Explore the Tour</a>
                      <a href="#booking-form" class="btn-primary">Book a Tour</a>
                 </div>
@@ -150,12 +206,14 @@
         <!-- The Experience Section -->
         <section id="experience" class="py-20">
             <div class="container mx-auto px-6">
-                 <h2 class="section-title" data-aos="fade-up">Feel the Vibe of Kigali</h2>
+                 <!-- Consistent title styling: text color and font-weight as "Moments from Our Walk" -->
+                <h2 class="section-title text-[#2C3E50] mb-4 text-5xl font-extrabold" data-aos="fade-up">Feel the Vibe of Kigali</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">See and feel the energy of our streets before you even arrive. Our tours are a vibrant mix of culture, history, and modern life. This is a glimpse of what awaits you.</p>
 
                 <!-- YouTube Video -->
-                <div class="mb-16" data-aos="zoom-in">
-                    <div class="aspect-w-16 aspect-h-9 rounded-lg shadow-2xl overflow-hidden mx-auto max-w-4xl">
+                <!-- Decreased max-w for the container to make it smaller -->
+                <div class="mb-16 max-w-sm mx-auto" data-aos="zoom-in">
+                    <div class="stylish-video-container">
                         <iframe 
                             src="https://www.youtube-nocookie.com/embed/grGqS6S3g5g?rel=0" 
                             frameborder="0" 
@@ -167,27 +225,97 @@
                     </div>
                 </div>
 
-                <!-- Social Media Feeds -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-                    <div data-aos="fade-right">
+                <!-- Social Media Feeds - Adjusted to stack vertically -->
+                <div class="flex flex-col space-y-10"> 
+                    <div data-aos="fade-right" class="w-full">
                         <h3 class="text-3xl font-bold text-[#2C3E50] mb-4">From Our Instagram</h3>
                         <p class="text-gray-600 mb-6">Follow our daily adventures and see the beautiful moments we capture on our tours. A feast for your eyes and inspiration for your journey.</p>
-                         <div class="flex overflow-x-auto gap-4 py-2 social-media-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:flex-wrap">
-                            <img src="https://images.unsplash.com/photo-1601620222214-a9335cf52504?q=80&w=1974&auto=format&fit=crop" alt="Kigali Market" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
-                            <div class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1599834562135-b6fc90e642ca?q=80&w=1935&auto=format&fit=crop');"></div>
-                            <img src="https://images.unsplash.com/photo-1541891244978-888a75e4e3a4?q=80&w=1974&auto=format&fit=crop" alt="Rwandan coffee" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
-                            <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop" alt="Community gathering" class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover">
-                            <div class="min-w-[150px] w-full max-w-[200px] h-auto rounded-lg shadow-md aspect-square object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1551632811-552948679d2b?q=80&w=2070&auto=format&fit=crop');"></div>
+                         <div class="relative">
+                            <div id="instagram-scroll-container" class="flex overflow-x-auto social-media-scroll gap-4 py-2 w-full">
+                                <!-- Instagram items (4 images, 4 video placeholders for a total of 8) -->
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1601620222214-a9335cf52504?q=80&w=1974&auto=format&fit=crop" alt="Kigali Market">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Market Buzz</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1599834562135-b6fc90e642ca?q=80&w=1935&auto=format&fit=crop');">
+                                     <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">City Life</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1541891244978-888a75e4e3a4?q=80&w=1974&auto=format&fit=crop" alt="Rwandan coffee">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Coffee Break</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Community Vibes</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1579309421334-4a88f7808b7a?q=80&w=1287&auto=format&fit=crop" alt="Kigali Cityscape">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Skyline</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1627806531980-60afe5d84caf?q=80&w=1287&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Architecture</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1596205268042-1763ab3b6BF3?q=80&w=1287&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Smiling Locals</p>
+                                </div>
+                                <div class="relative w-40 h-52 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1582967753755-cde08f395b05?q=80&w=1287&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Moto Adventure</p>
+                                </div>
+                            </div>
+                            <button id="instagram-scroll-left" class="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10 hidden md:block">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button id="instagram-scroll-right" class="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10 hidden md:block">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
                         </div>
                     </div>
-                     <div data-aos="fade-left" data-aos-delay="200">
+                     <div data-aos="fade-left" data-aos-delay="200" class="w-full">
                         <h3 class="text-3xl font-bold text-[#2C3E50] mb-4">Trending on TikTok</h3>
                         <p class="text-gray-600 mb-6">Catch the dynamic, fun, and fast-paced moments from our tours. Quick clips that show the real energy and joy of exploring Kigali with us.</p>
-                        <div class="flex overflow-x-auto gap-4 py-2 social-media-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:flex-wrap">
-                           <div class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1593455848148-7a5697c11f7a?q=80&w=1964&auto=format&fit=crop');"></div>
-                           <img src="https://images.unsplash.com/photo-1533555776034-0d738f328328?q=80&w=1964&auto=format&fit=crop" alt="Dancing in Kigali" class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover">
-                           <div class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover video-placeholder" style="background-image: url('https://images.unsplash.com/photo-1588665792276-f331904e578c?q=80&w=1974&auto=format&fit=crop');"></div>
-                           <img src="https://images.unsplash.com/photo-1559816001-c8529124430e?q=80&w=1974&auto=format&fit=crop" alt="Kigali Street View" class="min-w-[100px] w-full max-w-[150px] h-auto rounded-lg shadow-md aspect-[9/16] object-cover">
+                        <div class="relative">
+                            <div id="tiktok-scroll-container" class="flex overflow-x-auto social-media-scroll gap-4 py-2 w-full">
+                                <!-- Increased size and added more TikTok items -->
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group">
+                                     <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Street Dance</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1533555776034-0d738f328328?q=80&w=1964&auto=format&fit=crop" alt="Dancing in Kigali">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Rhythm</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1588665792276-f331904e578c?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Daily Life</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1559816001-c8529124430e?q=80&w=1974&auto=format&fit=crop" alt="Kigali Street View">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Street Vibe</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1506041235470-35323a6703b9?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Viewpoints</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1589944670077-e837190089f2?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Local Faces</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1596700813953-61b6e4e5d6d8?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Energy</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1601620222214-a9335cf52504?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Market Life</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1588665792276-f331904e578c?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Daily Life 2</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden group">
+                                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1506041235470-35323a6703b9?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Viewpoints 2</p>
+                                </div>
+                                <div class="relative w-48 h-64 flex-shrink-0 rounded-lg shadow-md overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1596700813953-61b6e4e5d6d8?q=80&w=1974&auto=format&fit=crop');">
+                                    <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-1 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Energy 2</p>
+                                </div>
+                            </div>
+                            <!-- Removed TikTok scroll buttons -->
                         </div>
                     </div>
                 </div>
@@ -198,25 +326,47 @@
         <!-- Gallery Section -->
         <section id="gallery" class="py-20 bg-white">
             <div class="container mx-auto px-6">
-                <h2 class="section-title" data-aos="fade-up">Moments from Our Walk</h2>
+                <!-- Removed border classes from this title -->
+                <h2 class="section-title text-[#2C3E50] mb-4 text-5xl font-extrabold" data-aos="fade-up">Moments from Our Walk</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Every corner holds a new sight, every street a different story. Here are just a few of the memories we've made with our guests.</p>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="grid gap-4" data-aos="fade-up">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1579309421334-4a88f7808b7a?q=80&w=1287&auto=format&fit=crop" alt="Kigali cityscape">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1627806531980-60afe5d84caf?q=80&w=1287&auto=format&fit=crop" alt="Kigali Convention Centre">
+                <div class="relative">
+                    <div id="gallery-scroll-container" class="flex overflow-x-auto social-media-scroll gap-4 py-2 w-full">
+                        <!-- Gallery items: 4 images, 4 video placeholders -->
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden group">
+                            <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1579309421334-4a88f7808b7a?q=80&w=1287&auto=format&fit=crop" alt="Kigali Cityscape">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">City View</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1627806531980-60afe5d84caf?q=80&w=1287&auto=format&fit=crop');">
+                             <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Convention Centre</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden group">
+                            <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1579297334494-de4c16828574?q=80&w=1470&auto=format&fit=crop');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Local Market</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1596205268042-1763ab3b6BF3?q=80&w=1287&auto=format&fit=fit');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Friendly Faces</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden group">
+                            <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://images.unsplash.com/photo-1582967753755-cde08f395b05?q=80&w=1287&auto=format&fit=crop');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">City Commute</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1547471080-7cc2d5d88e98?q=80&w=1470&auto=format&fit=crop');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Rwandan Portrait</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden group">
+                            <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300" src="https://plus.unsplash.com/premium_photo-1661963228303-b097e3a20f18?q=80&w=1470&auto=format&fit=crop');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Neighborhood Walk</p>
+                        </div>
+                        <div class="relative w-64 h-80 flex-shrink-0 rounded-lg shadow-lg overflow-hidden video-placeholder group" style="background-image: url('https://images.unsplash.com/photo-1605711217046-d3885ce3c25b?q=80&w=1335&auto=format&fit=crop');">
+                            <p class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white text-center text-sm py-2 px-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Local Crafts</p>
+                        </div>
                     </div>
-                    <div class="grid gap-4" data-aos="fade-up" data-aos-delay="100">
-                         <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1579297334494-de4c16828574?q=80&w=1470&auto=format&fit=crop" alt="Local market produce">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1596205268042-1763ab3b6BF3?q=80&w=1287&auto=format&fit=crop" alt="Rwandan woman smiling">
-                    </div>
-                    <div class="grid gap-4" data-aos="fade-up" data-aos-delay="200">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1582967753755-cde08f395b05?q=80&w=1287&auto=format&fit=crop" alt="Moto taxis in Kigali">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1547471080-7cc2d5d88e98?q=80&w=1470&auto=format&fit=crop" alt="Portrait of a man from Rwanda">
-                    </div>
-                     <div class="grid gap-4" data-aos="fade-up" data-aos-delay="300">
-                         <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://plus.unsplash.com/premium_photo-1661963228303-b097e3a20f18?q=80&w=1470&auto=format&fit=crop" alt="Kigali neighborhood">
-                        <img class="h-auto max-w-full rounded-lg shadow-lg" src="https://images.unsplash.com/photo-1605711217046-d3885ce3c25b?q=80&w=1335&auto=format&fit=crop" alt="Colorful textiles">
-                    </div>
+                    <button id="gallery-scroll-left" class="absolute left-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10 hidden md:block">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="gallery-scroll-right" class="absolute right-0 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full shadow-lg opacity-75 hover:opacity-100 transition-opacity z-10 hidden md:block">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -224,7 +374,9 @@
         <!-- AI-Powered Tour Itinerary Generator Section -->
         <section id="ai-itinerary" class="py-20 bg-gray-100">
             <div class="container mx-auto px-6 max-w-3xl">
-                <h2 class="section-title" data-aos="fade-up">✨ Tailor Your Kigali Experience</h2>
+                <!-- Changed text-4xl to text-5xl to make it stronger -->
+                <h2 class="section-title" data-aos="fade-up">✨ Ask Our AI</h2>
+                <!-- Increased mb-12 to mb-20 for more space -->
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Tell us what you love – history, food, art, markets, or something else! Our AI will highlight how your interests connect with the vibrant spirit of our foot tour.</p>
                 
                 <div class="bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
@@ -250,17 +402,40 @@
             </div>
         </section>
 
+        <!-- Social Media Platforms Section -->
+        <section id="social-media" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title" data-aos="fade-up">Connect With Us on Social Media</h2>
+                <!-- Increased mb-12 to mb-20 for more space -->
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Follow our journey and get daily doses of Kigali's beauty and vibrant culture!</p>
+                <div class="flex flex-wrap justify-center gap-8 py-8 px-4 rounded-lg bg-gray-50 shadow-md">
+                    <a href="https://www.instagram.com/kigaliwalks" target="_blank" rel="noopener noreferrer" 
+                       class="social-media-button instagram-button-style" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fab fa-instagram text-2xl"></i> <!-- Font Awesome Instagram icon -->
+                        <span>Catch us on Instagram</span>
+                    </a>
+                    <a href="https://www.tiktok.com/@kigaliwalks" target="_blank" rel="noopener noreferrer" 
+                       class="social-media-button tiktok-button-color" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fab fa-tiktok text-2xl"></i> <!-- Font Awesome TikTok icon -->
+                        <span>Catch us on TikTok</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
          <!-- Testimonials Section -->
-        <section id="testimonials" class="py-20">
+        <section id="testimonials" class="py-20 bg-blue-50"> <!-- Changed background color -->
             <div class="container mx-auto px-6">
                  <h2 class="section-title" data-aos="fade-up">What Our Walkers Say</h2>
                 <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Don't just take our word for it. Here's what fellow travelers have shared about their experience with Kigali Walks.</p>
                 <div class="grid md:grid-cols-2 gap-10">
-                    <div class="p-8 rounded-lg glassmorphism border-0" data-aos="fade-right">
-                        <p class="text-gray-700 italic mb-4">"The best way to see Kigali! Our guide was incredible, full of knowledge and passion. I saw parts of the city I never would have found on my own. Highly recommended!"</p>
+                    <div class="p-8 rounded-lg bg-white shadow-xl border border-gray-200" data-aos="fade-right"> <!-- Added bg-white, stronger shadow, clear border -->
+                        <div class="text-4xl text-gray-400 mb-4 text-left"><i class="fas fa-quote-left"></i></div> <!-- Added quote icon -->
+                        <p class="text-gray-700 italic mb-4">"The best way to see Kigali! Our guide was incredible, full of knowledge and knowledge. I saw parts of the city I never would have found on my own. Highly recommended!"</p>
                         <p class="font-bold text-[#2C3E50]">- Alex Johnson, USA</p>
                     </div>
-                     <div class="p-8 rounded-lg glassmorphism border-0" data-aos="fade-left" data-aos-delay="100">
+                     <div class="p-8 rounded-lg bg-white shadow-xl border border-gray-200" data-aos="fade-left" data-aos-delay="100"> <!-- Added bg-white, stronger shadow, clear border -->
+                        <div class="text-4xl text-gray-400 mb-4 text-left"><i class="fas fa-quote-left"></i></div> <!-- Added quote icon -->
                         <p class="text-gray-700 italic mb-4">"An absolutely fantastic tour. It felt like walking with a friend. We tasted amazing local coffee, met friendly artisans, and truly felt the pulse of the city. A must-do in Kigali."</p>
                         <p class="font-bold text-[#2C3E50]">- Chloe Dubois, France</p>
                     </div>
@@ -269,32 +444,33 @@
         </section>
 
         <!-- Book Your Foot Tour Form Section -->
-        <section id="booking-form" class="py-20 bg-gray-100">
+        <section id="booking-form" class="py-20 bg-red-50"> <!-- Changed background color to bg-red-50 for a warm, pleasant contrast -->
             <div class="container mx-auto px-6 max-w-3xl">
                 <h2 class="section-title" data-aos="fade-up">Book Your Kigali Foot Tour</h2>
-                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Fill out the form below and we'll get in touch to confirm your personalized walking experience in Kigali!</p>
+                <!-- Added margin-bottom to section-subtitle to increase space -->
+                <p class="section-subtitle mb-16" data-aos="fade-up" data-aos-delay="100">Fill out the form below and we'll get in touch to confirm your personalized walking experience in Kigali!</p>
                 
-                <div class="bg-white p-8 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                <div class="bg-white p-8 rounded-lg shadow-2xl border border-gray-200 mt-10" data-aos="fade-up" data-aos-delay="200"> <!-- Enhanced shadow, added border, and increased top margin -->
                     <form id="tour-booking-form" class="space-y-6">
                         <div>
-                            <label for="full-name" class="block text-gray-700 text-lg font-bold mb-2">Your Full Name:</label>
+                            <label for="full-name" class="block text-gray-700 text-xl font-bold mb-2">Your Full Name:</label> <!-- Changed text-lg to text-xl for label -->
                             <input type="text" id="full-name" name="fullName" placeholder="John Doe" required
-                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                                   class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
                         </div>
                         <div>
-                            <label for="visit-date" class="block text-gray-700 text-lg font-bold mb-2">Preferred Visit Date:</label>
+                            <label for="visit-date" class="block text-gray-700 text-xl font-bold mb-2">Preferred Visit Date:</label> <!-- Changed text-lg to text-xl for label -->
                             <input type="date" id="visit-date" name="visitDate" required
-                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                                   class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
                         </div>
                         <div>
-                            <label for="places-to-visit" class="block text-gray-700 text-lg font-bold mb-2">Places you wish to visit in Kigali (Optional):</label>
+                            <label for="places-to-visit" class="block text-gray-700 text-xl font-bold mb-2">Places you wish to visit in Kigali (Optional):</label> <!-- Changed text-lg to text-xl for label -->
                             <textarea id="places-to-visit" name="placesToVisit" rows="4" placeholder="e.g., Kimironko Market, Nyamirambo Women's Center, local art galleries"
-                                      class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300"></textarea>
+                                      class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"></textarea>
                         </div>
                         <div>
-                            <label for="email-address" class="block text-gray-700 text-lg font-bold mb-2">Your Email:</label>
+                            <label for="email-address" class="block text-gray-700 text-xl font-bold mb-2">Your Email:</label> <!-- Changed text-lg to text-xl for label -->
                             <input type="email" id="email-address" name="emailAddress" placeholder="you@example.com" required
-                                   class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:border-blue-500 transition-all duration-300">
+                                   class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
                         </div>
                         <button type="submit" class="btn-primary w-full">Submit Booking Inquiry</button>
                     </form>
@@ -314,9 +490,8 @@
                 <div data-aos="zoom-in" data-aos-delay="200">
                     <a href="https://wa.me/250788123456?text=Hello%20Kigali%20Walks!%20I'm%20interested%20in%20booking%20a%20foot%20tour.%20Can%20you%20please%20provide%20more%20details%20on%20availability%3F"
                        target="_blank"
-                       class="whatsapp-btn inline-block">
-                        <!-- Unicode character for WhatsApp icon -->
-                        <span class="text-3xl">✆</span>
+                       class="btn-primary inline-block"> <!-- Changed to btn-primary -->
+                        <i class="fab fa-whatsapp text-3xl"></i> <!-- Font Awesome WhatsApp icon -->
                         <span>Chat with us on WhatsApp</span>
                     </a>
                 </div>
@@ -385,7 +560,10 @@
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
-                const apiKey = ""; // Canvas will provide this automatically
+                // IMPORTANT: In the Canvas environment, the API key is automatically provided.
+                // If running this code locally (e.g., in VS Code), you will need to
+                // replace `""` with your actual Gemini API key like: `const apiKey = "YOUR_GEMINI_API_KEY";`
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -393,6 +571,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`API error: ${response.status} ${response.statusText} - ${errorData.error.message}`);
+                }
 
                 const result = await response.json();
                 
@@ -403,12 +586,13 @@
                     itineraryText.textContent = text;
                     itineraryOutput.classList.remove('hidden');
                 } else {
-                    itineraryText.textContent = "Sorry, I couldn't generate a personalized snippet right now. Please try again or refine your interests.";
+                    itineraryText.textContent = "Sorry, I couldn't generate a personalized snippet right now. The API response was empty or malformed.";
                     itineraryOutput.classList.remove('hidden');
+                    console.error("Gemini API response structure unexpected:", result);
                 }
             } catch (error) {
                 console.error("Error generating itinerary:", error);
-                itineraryText.textContent = "An error occurred while generating the snippet. Please check your internet connection and try again.";
+                itineraryText.textContent = `An error occurred while generating the snippet. Details: ${error.message}. Please check your internet connection and try again.`;
                 itineraryOutput.classList.remove('hidden');
             } finally {
                 loadingIndicator.classList.add('hidden');
@@ -422,8 +606,9 @@
         tourBookingForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent default form submission
 
-            // In a real application, you would send this data to a server.
-            // For now, we'll just display a success message.
+            // In a real application, you would send this data to a server
+            // using fetch() or XMLHttpRequest. For this example, we're just
+            // logging it to the console and showing a success message.
             const formData = new FormData(tourBookingForm);
             const bookingDetails = {};
             for (let [key, value] of formData.entries()) {
@@ -439,6 +624,69 @@
                 formSubmissionMessage.classList.add('hidden');
             }, 5000);
         });
+
+        // Horizontal scroll for Instagram section
+        const instagramScrollContainer = document.getElementById('instagram-scroll-container');
+        const instagramScrollLeftBtn = document.getElementById('instagram-scroll-left');
+        const instagramScrollRightBtn = document.getElementById('instagram-scroll-right');
+
+        if (instagramScrollLeftBtn && instagramScrollRightBtn) {
+            instagramScrollLeftBtn.addEventListener('click', () => {
+                instagramScrollContainer.scrollBy({
+                    left: -300, // Adjust scroll amount as needed
+                    behavior: 'smooth'
+                });
+            });
+
+            instagramScrollRightBtn.addEventListener('click', () => {
+                instagramScrollContainer.scrollBy({
+                    left: 300, // Adjust scroll amount as needed
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // Removed TikTok scrolling button logic
+        // const tiktokScrollContainer = document.getElementById('tiktok-scroll-container');
+        // const tiktokScrollLeftBtn = document.getElementById('tiktok-scroll-left');
+        // const tiktokScrollRightBtn = document.getElementById('tiktok-scroll-right');
+
+        // if (tiktokScrollLeftBtn && tiktokScrollRightBtn) {
+        //     tiktokScrollLeftBtn.addEventListener('click', () => {
+        //         tiktokScrollContainer.scrollBy({
+        //             left: -200, // Adjust scroll amount as needed
+        //             behavior: 'smooth'
+        //         });
+        //     });
+
+        //     tiktokScrollRightBtn.addEventListener('click', () => {
+        //         tiktokScrollContainer.scrollBy({
+        //             left: 200, // Adjust scroll amount as needed
+        //             behavior: 'smooth'
+        //         });
+        //     });
+        // }
+
+        // Horizontal scroll for Gallery section
+        const galleryScrollContainer = document.getElementById('gallery-scroll-container');
+        const galleryScrollLeftBtn = document.getElementById('gallery-scroll-left');
+        const galleryScrollRightBtn = document.getElementById('gallery-scroll-right');
+
+        if (galleryScrollLeftBtn && galleryScrollRightBtn) {
+            galleryScrollLeftBtn.addEventListener('click', () => {
+                galleryScrollContainer.scrollBy({
+                    left: -350, // Adjust scroll amount as needed for gallery items
+                    behavior: 'smooth'
+                });
+            });
+
+            galleryScrollRightBtn.addEventListener('click', () => {
+                galleryScrollContainer.scrollBy({
+                    left: 350, // Adjust scroll amount as needed for gallery items
+                    behavior: 'smooth'
+                });
+            });
+        }
 
     </script>
     <!-- Spinner CSS for loading indicator -->
