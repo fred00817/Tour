@@ -15,7 +15,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Font Awesome is needed for brand icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <!-- Email.js CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
     <style>
         body {
@@ -472,10 +473,17 @@
                             <input type="email" id="email-address" name="emailAddress" placeholder="you@example.com" required
                                    class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300">
                         </div>
-                        <button type="submit" class="btn-primary w-full">Submit Booking Inquiry</button>
+                        <button type="submit" class="btn-primary w-full" id="submit-booking-form-btn">Submit Booking Inquiry</button>
                     </form>
                     <div id="form-submission-message" class="mt-6 p-4 bg-green-100 text-green-800 rounded-lg hidden">
                         Thank you for your inquiry! We've received your booking request and will get in touch shortly to finalize your tour.
+                    </div>
+                     <div id="form-loading-indicator" class="hidden mt-8 text-center text-gray-600">
+                        <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 mx-auto"></div>
+                        Sending your booking inquiry...
+                    </div>
+                    <div id="form-error-message" class="mt-6 p-4 bg-red-100 text-red-800 rounded-lg hidden">
+                        There was an error sending your booking inquiry. Please try again later.
                     </div>
                 </div>
             </div>
@@ -563,7 +571,7 @@
                 // IMPORTANT: In the Canvas environment, the API key is automatically provided.
                 // If running this code locally (e.g., in VS Code), you will need to
                 // replace `""` with your actual Gemini API key like: `const apiKey = "YOUR_GEMINI_API_KEY";`
-                const apiKey = ""; 
+                const apiKey = "AIzaSyDT8wl1pYGBLf3ia_pDT6ugyGkFi9PKVeM"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
                 const response = await fetch(apiUrl, {
@@ -601,28 +609,43 @@
 
         // Tour Booking Form Logic
         const tourBookingForm = document.getElementById('tour-booking-form');
+        const submitBookingFormBtn = document.getElementById('submit-booking-form-btn');
         const formSubmissionMessage = document.getElementById('form-submission-message');
+        const formLoadingIndicator = document.getElementById('form-loading-indicator');
+        const formErrorMessage = document.getElementById('form-error-message');
 
-        tourBookingForm.addEventListener('submit', (event) => {
+        // Initialize Email.js with your Public Key
+        // IMPORTANT: Replace "YOUR_EMAILJS_PUBLIC_KEY" with your actual Email.js Public Key
+        emailjs.init("LYHJm3cPkOsz0_L4C");
+
+        tourBookingForm.addEventListener('submit', async (event) => {
             event.preventDefault(); // Prevent default form submission
 
-            // In a real application, you would send this data to a server
-            // using fetch() or XMLHttpRequest. For this example, we're just
-            // logging it to the console and showing a success message.
-            const formData = new FormData(tourBookingForm);
-            const bookingDetails = {};
-            for (let [key, value] of formData.entries()) {
-                bookingDetails[key] = value;
-            }
-            console.log("Booking Details Submitted:", bookingDetails);
+            formSubmissionMessage.classList.add('hidden'); // Hide previous messages
+            formErrorMessage.classList.add('hidden');
+            formLoadingIndicator.classList.remove('hidden'); // Show loading indicator
+            submitBookingFormBtn.disabled = true; // Disable button during submission
 
-            formSubmissionMessage.classList.remove('hidden'); // Show confirmation message
-            tourBookingForm.reset(); // Clear the form
-            
-            // Optionally hide the message after a few seconds
-            setTimeout(() => {
-                formSubmissionMessage.classList.add('hidden');
-            }, 5000);
+            try {
+                // IMPORTANT: Replace "YOUR_EMAILJS_SERVICE_ID" and "YOUR_EMAILJS_TEMPLATE_ID"
+                // with your actual Email.js Service ID and Template ID
+                const response = await emailjs.sendForm(
+                    "service_z49zxhi",
+                    "template_ks627dp",
+                    tourBookingForm
+                );
+
+                console.log('Email.js SUCCESS!', response);
+                formSubmissionMessage.classList.remove('hidden'); // Show success message
+                tourBookingForm.reset(); // Clear the form on success
+
+            } catch (error) {
+                console.error('Email.js FAILED...', error);
+                formErrorMessage.classList.remove('hidden'); // Show error message
+            } finally {
+                formLoadingIndicator.classList.add('hidden'); // Hide loading indicator
+                submitBookingFormBtn.disabled = false; // Re-enable button
+            }
         });
 
         // Horizontal scroll for Instagram section
@@ -645,27 +668,6 @@
                 });
             });
         }
-
-        // Removed TikTok scrolling button logic
-        // const tiktokScrollContainer = document.getElementById('tiktok-scroll-container');
-        // const tiktokScrollLeftBtn = document.getElementById('tiktok-scroll-left');
-        // const tiktokScrollRightBtn = document.getElementById('tiktok-scroll-right');
-
-        // if (tiktokScrollLeftBtn && tiktokScrollRightBtn) {
-        //     tiktokScrollLeftBtn.addEventListener('click', () => {
-        //         tiktokScrollContainer.scrollBy({
-        //             left: -200, // Adjust scroll amount as needed
-        //             behavior: 'smooth'
-        //         });
-        //     });
-
-        //     tiktokScrollRightBtn.addEventListener('click', () => {
-        //         tiktokScrollContainer.scrollBy({
-        //             left: 200, // Adjust scroll amount as needed
-        //             behavior: 'smooth'
-        //         });
-        //     });
-        // }
 
         // Horizontal scroll for Gallery section
         const galleryScrollContainer = document.getElementById('gallery-scroll-container');
